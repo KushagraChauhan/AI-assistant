@@ -4,17 +4,27 @@ import speech_recognition as sr
 
 engine = pyttsx3.init()
 
+'''
+Speak Function- Our main function to hear the AI Assistant
+'''
 def speak(audio):
     rate = engine.getProperty('rate')
-    engine.setProperty('rate', rate-10)
+    engine.setProperty('rate', rate-10) # Rate- to reduce the playback speak
     engine.say(audio)
     engine.runAndWait()
+
+'''
+Time Function- This gets the current time
+'''
 
 def time_():
     Time = datetime.datetime.now().strftime("%H:%M:%S")
     speak("the time is:")
     speak(Time)
 
+'''
+Date Function- This gets the present date
+'''
 def date_():
     year  = datetime.datetime.now().year
     month = datetime.datetime.now().month
@@ -24,6 +34,9 @@ def date_():
     speak(month)
     speak(year)
 
+'''
+Wishme Functin- Custom greeting w.r.t the time of the day
+'''
 def wishme():
     speak("welcome back Kush")
     time_()
@@ -42,6 +55,10 @@ def wishme():
 
     speak("Its your AI Assistant, tell me how can I help you?")
 
+
+'''
+TakeCommand Function- Use Speech Recognition library to understand the user query
+'''
 def TakeCommand():
     r = sr.Recognizer()
     with sr.Microphone() as source:
@@ -63,4 +80,14 @@ def TakeCommand():
 
     return query
 
-TakeCommand()
+if __name__ == "__main__":
+    wishme()
+
+    while True:
+        query = TakeCommand().lower()
+
+        if 'time' in query:
+            time_()
+
+        elif 'date' in query:
+            date_()
