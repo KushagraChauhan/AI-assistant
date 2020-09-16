@@ -1,6 +1,7 @@
 import pyttsx3
 import datetime
 import speech_recognition as sr
+import wikipedia
 
 engine = pyttsx3.init()
 
@@ -62,7 +63,7 @@ TakeCommand Function- Use Speech Recognition library to understand the user quer
 def TakeCommand():
     r = sr.Recognizer()
     with sr.Microphone() as source:
-        r.adjust_for_ambient_noise(source, duration=5)
+        r.adjust_for_ambient_noise(source, duration=1)
         print("Listening....")
         #r.pause_threshold = 1
         audio = r.listen(source)
@@ -80,6 +81,14 @@ def TakeCommand():
 
     return query
 
+def Wikipedia():
+    speak("Searching...")
+    query = query.replace('search','')
+    result = wikipedia.summary(query, sentences=3)
+    speak("According to wikipedia")
+    print(result)
+    speak(result)
+
 if __name__ == "__main__":
     wishme()
 
@@ -91,3 +100,6 @@ if __name__ == "__main__":
 
         elif 'date' in query:
             date_()
+
+        elif 'search' in query:
+            Wikipedia()
